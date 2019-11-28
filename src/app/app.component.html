@@ -1,23 +1,11 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <span>{{ title }}</span>
-        <span class="fill-remaining-space"></span>
-        <button mat-button [matMenuTriggerFor]="appMenu">Games</button>
-        <mat-menu #appMenu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>create</mat-icon>
-              <span>Create new game</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>new_releases</mat-icon>
-              <span>Upcoming games</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>format_list_bulleted</mat-icon>
-              <span>Past games</span>
-            </button>
-          </mat-menu>
-      </mat-toolbar-row>
-</mat-toolbar>
+<nav class="navbar navbar-light bg-info">
+	<a class="navbar-brand mr-auto" [routerLink]="['/']">{{ title }}</a>
+	<nav class="my-2 my-md-0 mr-md-3">
+		<a class="p-2 text-dark" [routerLink]="['/games']">Games</a>
+		<a class="p-2 text-dark" [routerLink]="['/variants']">Variants</a>
+		<a class="p-2 text-dark" [routerLink]="['/how-to-play']">How to play</a>
+		<a class="p-2 text-dark" [routerLink]="['/login']">Login</a>
+	</nav>
+</nav>
 
 <router-outlet></router-outlet>

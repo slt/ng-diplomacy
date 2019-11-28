@@ -1,0 +1,33 @@
+<div class="bg-light">
+	<div *ngIf="!variant" class="spinner">
+		<app-spinner></app-spinner>
+	</div>
+	<div *ngIf="variant">
+		<div class="jumbotron bg-white">
+			<div class="container">
+				<h1 class="display-4">{{ variant.Name }}</h1>
+				<h4>{{ variant.Nations.length }} players</h4>
+				<p class="lead">{{ variant.Decription }}</p>
+			</div>
+		</div>
+		<div>
+			<img class="map mt-5" src="{{ variant.SVG }}" />
+		</div>
+		<div class="container bg-light">
+			<div class="row">
+				<div class="card variant col my-5">
+					<div class="card-body">
+						<dl>
+							<dt>Created By</dt>
+							<dd>{{ variant.CreatedBy }}</dd>
+						</dl>
+						<dl>
+							<dt>Rules</dt>
+							<dd>{{ variant.Rules }}</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

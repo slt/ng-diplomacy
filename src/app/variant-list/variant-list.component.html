@@ -1,0 +1,26 @@
+<div class="jumbotron bg-white">
+	<div class="container">
+		<h1 class="display-4">Variants</h1>
+	</div>
+</div>
+<div class="bg-light">
+	<div class="container">
+		<div *ngIf="!variants" class="spinner">
+			<app-spinner></app-spinner>
+		</div>
+		<div *ngIf="variants">
+			<div class="row">
+				<div class="col-md-6" *ngFor="let variant of variants">
+					<div class="card variant">
+						<div class="card-header">
+							<h4 class="my-0 font-weight-normal">{{ variant.Name }} ({{ variant.Nations.length }} players)</h4>
+						</div>
+						<a class="card-body" [routerLink]="['/variant', variant.ID]">
+							<img src="{{ variant.SVG }}" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
