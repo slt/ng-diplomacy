@@ -7,8 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-	"e2e": "ng e2e",
-	"release": "s3-deploy './dist/ng-diplomacy/**' --region ap-southeast-2 --bucket diplomacy.slt.io"
+    "e2e": "ng e2e",
+    "release": "s3-deploy './dist/ng-diplomacy/**' --region ap-southeast-2 --bucket diplomacy.slt.io"
   },
   "private": true,
   "dependencies": {

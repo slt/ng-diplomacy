@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { first } from 'rxjs/operators';
 import { filter } from 'rxjs/operators';
 import { from } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,34 +20,40 @@ export class VariantService {
 
 	constructor(
 		private http: HttpClient
-	) {}
+	) {
+		console.log("New VariantService")
+	}
 
 	getVariants(): Observable<Map<String, any>> {
-		if (!this.variants$) {
+		if (this.variants$ == undefined) {
 			this.variants$ = this.http.get('https://diplicity-engine.appspot.com/Variants?api-level=7', {
 				headers: {'Accept': 'application/json'}
-			}).pipe(map(data => {
-				let variantMap = new Map<String, any>();
-				let variants = data['Properties']
+			}).pipe(
+				map(data => {
+					let variantMap = new Map<String, any>();
+					let variants = data['Properties']
 
-				for (let i = 0; i < variants.length; i++) {
-					let variant = variants[i].Properties
-					let variantID = this.getVariantID(variant.Name)
-					variant.ID = variantID
-					variant.SVG = this.getMapFromLinks(variants[i].Links)
-					variantMap.set(variantID, variant)
-				}
-				return variantMap
-			}))
+					for (let i = 0; i < variants.length; i++) {
+						let variant = variants[i].Properties
+						let variantID = this.getVariantID(variant.Name)
+						variant.ID = variantID
+						variant.SVG = this.getMapFromLinks(variants[i].Links)
+						variantMap.set(variantID, variant)
+					}
+					return variantMap
+				}),
+				shareReplay()
+			);
+			return this.variants$;
+
 		}
-
 		return this.variants$;
 	}
 
 	getMapFromLinks(links): string {
 		for (let i = 0; i < links.length; i++) {
 			if (links[i].Rel == "map") {
-				return links[i].URL
+				return links[i].URL.replace("http://", "https://")
 			}
 		}
 	}
