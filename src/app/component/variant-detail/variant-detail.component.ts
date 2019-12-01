@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { VariantService } from '../variant.service';
+import { VariantService } from '../../service/variant.service';
 
 @Component({
 	selector: 'app-variant-detail',
@@ -22,15 +22,4 @@ export class VariantDetailComponent implements OnInit {
 			this.variantService.getVariant(this.variantID).subscribe(variant => this.variant = variant)
 		});
 	}
-
-	// findVariant(data) {
-	// 	for (var i = 0, len = data.length; i < len; i++) {
-	// 		let value = data[i];
-	// 		if (value['Name'] == this.variantID) {
-	// 			return value;
-	// 		}
-	// 	}
-
-	// 	return undefined;
-	// }
 }

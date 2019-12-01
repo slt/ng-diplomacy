@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { VariantService } from '../variant.service';
+import { VariantService } from '../../service/variant.service';
+import { Observable } from "rxjs"
 
 @Component({
 	selector: 'app-variant-list',
@@ -8,7 +9,7 @@ import { VariantService } from '../variant.service';
 	styleUrls: ['./variant-list.component.scss']
 })
 export class VariantListComponent implements OnInit {
-	variants;
+	variants: IterableIterator<any>;
 
 	constructor(
 		private route: ActivatedRoute,
