@@ -1,38 +1,45 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 // import { environment } from '@environments/environment';
 // import { User } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    // private currentUserSubject: BehaviorSubject<User>;
-    // public currentUser: Observable<User>;
 
-    // constructor(private http: HttpClient) {
-    //     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    //     this.currentUser = this.currentUserSubject.asObservable();
-    // }
+	// public token: Observable<string>;
+	public isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+	// public isLoggedInObservable = this.isLoggedInSubject.
 
-    // public get currentUserValue(): User {
-    //     return this.currentUserSubject.value;
-    // }
+	constructor(
+		@Inject(LOCAL_STORAGE) private storage: StorageService
+	) {}
 
-    // login(username: string, password: string) {
-    //     return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-    //         .pipe(map(user => {
-    //             // store user details and jwt token in local storage to keep user logged in between page refreshes
-    //             localStorage.setItem('currentUser', JSON.stringify(user));
-    //             this.currentUserSubject.next(user);
-    //             return user;
-    //         }));
-    // }
+	public isLoggedIn(): Observable<boolean> {
+		return this.isLoggedInSubject.asObservable();
+	}
 
-	logout() {
-		// // remove user from local storage to log user out
-		// localStorage.removeItem('currentUser');
-		// this.currentUserSubject.next(null);
+	public hasToken() {
+		let hasToken = !!this.getToken();
+		console.log("hasToken " + hasToken);
+		return hasToken;
+	}
+
+	public setToken(token: string) {
+		this.storage.set("token", token);
+		this.isLoggedInSubject.next(true);
+	}
+
+	public getToken(): string {
+		let token = this.storage.get("token");
+		console.log("getToken " + token);
+		return token;
+	}
+
+	public clearToken() {
+		this.storage.remove("token");
+		this.isLoggedInSubject.next(false);
 	}
 }

@@ -11,18 +11,12 @@ import { shareReplay } from 'rxjs/operators';
 	providedIn: 'root'
 })
 
-// export interface VariantMap {
-// 	[variantID: string] : any;
-// }
-
 export class VariantService {
 	private variants$;
 
 	constructor(
 		private http: HttpClient
-	) {
-		console.log("New VariantService")
-	}
+	) {}
 
 	getVariants(): Observable<Map<String, any>> {
 		if (this.variants$ == undefined) {

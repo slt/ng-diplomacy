@@ -7,6 +7,7 @@ import { VariantService } from '../../service/variant.service';
 	templateUrl: './variant-detail.component.html',
 	styleUrls: ['./variant-detail.component.scss']
 })
+
 export class VariantDetailComponent implements OnInit {
 	variant;
 	variantID;

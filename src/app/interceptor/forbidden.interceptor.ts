@@ -7,17 +7,17 @@ import * as HttpStatus from 'http-status-codes';
 
 @Injectable()
 export class ForbiddenInterceptor implements HttpInterceptor {
-    constructor(private authenticationService: AuthenticationService) { }
+	constructor(private authenticationService: AuthenticationService) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(catchError(err => {
-            if (err.status === HttpStatus.UNAUTHORIZED) {
-                this.authenticationService.logout();
-                location.reload(true);
-            }
+	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+		return next.handle(request).pipe(catchError(err => {
+			if (err.status === HttpStatus.UNAUTHORIZED) {
+				this.authenticationService.clearToken();
+				location.reload(true);
+			}
 
-            const error = err.error.message || err.statusText;
-            return throwError(error);
-        }))
-    }
+			const error = err.error.message || err.statusText;
+			return throwError(error);
+		}))
+	}
 }
